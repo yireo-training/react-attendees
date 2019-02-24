@@ -1,0 +1,11 @@
+.Present {
+    font-weight: boldest;
+}
+
+.Present.uk-close {
+    color: red;
+}
+
+.Present.uk-check {
+    color: green;
+}

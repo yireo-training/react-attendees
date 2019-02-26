@@ -9,6 +9,7 @@ import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context';
+import { persistCache } from 'apollo-cache-persist';
 
 const httpLink = new HttpLink({
   uri: 'http://training.yireo.comdev/graphql',
@@ -17,6 +18,13 @@ const httpLink = new HttpLink({
     mode: "no-cors",
 },
 })
+
+const cache = new InMemoryCache();
+
+persistCache({
+  cache,
+  storage: window.localStorage
+});
 
 const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('token');
@@ -31,7 +39,7 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache: cache
 })
 
 ReactDOM.render(

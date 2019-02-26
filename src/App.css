@@ -1,0 +1,12 @@
+body {
+    padding: 20px;
+}
+
+th button {
+    font-size: .875rem;
+    font-weight: 400;
+    color: #999;
+    text-transform: uppercase;
+    border: 0;
+    background-color: transparent;
+}

@@ -22,7 +22,10 @@ mutation UpdateAttendee($token: String, $attendeeId: Int, $presence: Boolean) {
 class Present extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {present: props.present};
+        this.state = {
+            present: props.present,
+            loading: false
+        };
     }
 
     componentDidUpdate(previousProps) {
@@ -32,17 +35,20 @@ class Present extends React.Component {
     }
 
     togglePresence(id, currentPresence, client) {
-        console.log(id, currentPresence)
         let newPresence = !currentPresence;
-        this.setState({present: newPresence});
+        this.setState({loading: true});
         client.mutate({
             mutation: UPDATE_ATTENDEE,
             variables: {
-                token: 'graphqlrocks',
+                token: this.props.token,
                 attendeeId: id,
                 presence: newPresence
             }
-        });
+        }).then(this.renderPresence.bind(this, newPresence));
+    }
+
+    renderPresence(newPresence) {
+        this.setState({loading: false, present: newPresence});
     }
 
     render() {
@@ -52,7 +58,8 @@ class Present extends React.Component {
                 <Button 
                     onChange={(id, present) => this.togglePresence(id, present, client)} 
                     id={this.props.id} 
-                    present={this.state.present} 
+                    present={this.state.present}
+                    loading={this.state.loading}
                 />
             )}
             </ApolloConsumer>

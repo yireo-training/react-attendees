@@ -51,7 +51,7 @@ const AttendeeList = (props) => {
                             {attendee.product_name}
                         </td>
                         <td>
-                            <Present present={attendee.present} id={attendee.attendee_id} />
+                            <Present token={props.token} present={attendee.present} id={attendee.attendee_id} />
                         </td>
                     </tr>
                 ))}
@@ -86,7 +86,7 @@ export default graphql(ATTENDEES_QUERY, {
         search: props.search,
         productSku: props.product,
         sortOrder: props.sortOrder,
-        token: 'graphqlrocks'
+        token: props.token
     }}),
     name: 'attendeesQuery'
 })(AttendeeList)

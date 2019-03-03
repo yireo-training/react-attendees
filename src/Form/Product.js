@@ -23,6 +23,7 @@ class Product extends React.Component {
                 className="uk-select"
                 value={this.props.value}
                 onChange={this.props.onChange}
+                multiple={true}
             >
             <option key="none" value="none">-- Choose a product --</option>
             {products.map(product => (
@@ -34,14 +35,18 @@ class Product extends React.Component {
 }
 
 const PRODUCTS_QUERY = gql`
-query {
-    products(search: "mtf2") {
+{
+    products(filter: {
+      category_id: {
+        eq: "8"
+      }
+    }) {
       items {
         sku
         name
       }
     }
-  }
+  }  
 `
 
 export default graphql(PRODUCTS_QUERY, {

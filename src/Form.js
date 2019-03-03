@@ -15,6 +15,11 @@ class Form extends React.Component {
                     value={this.props.product}
                     onChange={this.props.onChangeProduct}
                 />
+                <input type="checkbox"
+                    className="uk-checkbox"
+                    checked={this.props.export}
+                    onChange={this.props.onChangeExport}
+                />
             </>
         );
     }

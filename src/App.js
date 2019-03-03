@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
-import AttendeeList from './AttendeeList';
+import Attendees from './Attendees';
 import Form from './Form';
 
 class App extends Component {
   componentWillMount() {
     this.setState({
       token: localStorage.getItem('token'),
+      tokenIsValid: localStorage.getItem('tokenIsValid'),
       search: localStorage.getItem('search'),
-      product: localStorage.getItem('product')
+      product: localStorage.getItem('product'),
+      export: localStorage.getItem('export')
     })
-  }
-
-  validateToken(token) {
-    if (token !== 'graphqlrocks') {
-      return false;
-    }
-
-    return true;
   }
 
   onChangeToken = (event) => {
@@ -33,9 +27,22 @@ class App extends Component {
   }
 
   onChangeProduct = (event) => {
-    let productSku = event.target.value;
-    this.setState({ product: productSku });
-    localStorage.setItem('product', productSku);
+    var options = event.target.options;
+    var value = [];
+    for (var i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+
+    this.setState({ product: value });
+    localStorage.setItem('product', value);
+  }
+
+  onChangeExport = (event) => {
+    let exportValue = event.target.checked;
+    this.setState({ export: exportValue });
+    localStorage.setItem('export', exportValue);
   }
 
   onChangeSortOrder = (sortOrder) => {
@@ -44,20 +51,6 @@ class App extends Component {
   }
 
   render() {
-    if (!this.validateToken(this.state.token)) {
-      return (
-        <div className="App">
-          <input type="text"
-            className="uk-input"
-            value={this.state.token}
-            onChange={this.onChangeToken}
-            placeholder="Security token"
-          />
-          Invalid token: {this.state.token}
-        </div>
-      )
-    }
-
     return (
       <div className="App">
         <h2>MageTestFest Attendees</h2>
@@ -67,11 +60,15 @@ class App extends Component {
           search={this.state.search}
           onChangeProduct={this.onChangeProduct.bind(this)}
           product={this.state.product}
+          onChangeExport={this.onChangeExport.bind(this)}
+          export={this.state.export}
         />
-        <AttendeeList
+        <Attendees
           token={this.state.token}
+          onChangeToken={this.onChangeToken.bind(this)}
           search={this.state.search}
           product={this.state.product}
+          export={this.state.export}
           sortOrder={this.state.sortOrder}
           onChangeSortOrder={this.onChangeSortOrder.bind(this)}
         />

@@ -10,8 +10,8 @@ import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { persistCache } from 'apollo-cache-persist';
 
-//const graphqlLink = 'https://training.yireo.com/graphql';
-const graphqlLink = 'http://training.yireo.comdev/graphql';
+const graphqlLink = 'https://training.yireo.com/graphql';
+//const graphqlLink = 'http://training.yireo.comdev/graphql';
 
 const httpLink = new HttpLink({
   uri: graphqlLink

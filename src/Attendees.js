@@ -71,6 +71,7 @@ const Attendees = (props) => {
                                     <>{attendee.email}, </>
                                 ))}
                             </pre>
+                            <p>Count {attendees.length}</p>
                         </>
                     );
                 }
@@ -80,7 +81,7 @@ const Attendees = (props) => {
                         <table className="uk-table uk-table-striped uk-table-small">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th className="uk-visible@m">
                                         <button onClick={() => props.onChangeSortOrder('attendee_id')}>ID</button>
                                     </th>
                                     <th>
@@ -98,12 +99,12 @@ const Attendees = (props) => {
                             <tbody>
                                 {attendees.map(attendee => (
                                     <tr key={attendee.attendee_id}>
-                                        <td>
+                                        <td className="uk-visible@m">
                                             {attendee.attendee_id}
                                         </td>
                                         <td>
                                             {attendee.name}<br />
-                                            {attendee.email}
+                                            <small>{attendee.email}</small>
                                         </td>
                                         <td className="uk-visible@m">
                                             {attendee.product_name}

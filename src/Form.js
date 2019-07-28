@@ -3,11 +3,13 @@ import Product from './Form/Product';
 
 class Form extends React.Component {
     render() {
+        let currentSearch = this.props.search.toString();
+
         return (
-            <>
+            <div style={{padding:"5px"}}>
                 <input type="text"
                     className="uk-input"
-                    value={this.props.search}
+                    value={currentSearch}
                     onChange={this.props.onChangeSearch}
                     placeholder="Search for a name or email"
                 />
@@ -17,10 +19,11 @@ class Form extends React.Component {
                 />
                 <input type="checkbox"
                     className="uk-checkbox"
-                    checked={this.props.export}
+                    checked={!!this.props.export}
                     onChange={this.props.onChangeExport}
                 />
-            </>
+                <label>Export to CSV</label>
+            </div>
         );
     }
 }

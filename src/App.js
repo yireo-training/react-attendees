@@ -4,13 +4,25 @@ import Attendees from './Attendees';
 import Form from './Form';
 
 class App extends Component {
+  state = {
+    token: '',
+    tokenIsValid: false,
+    search: '',
+    product: [],
+    export: false
+  }
+
   componentWillMount() {
+    let token = localStorage.getItem('token') || "";
+    let search = localStorage.getItem('search') || "";
+    let product = localStorage.getItem('product') || "";
+
     this.setState({
-      token: localStorage.getItem('token'),
+      token: token,
       tokenIsValid: localStorage.getItem('tokenIsValid'),
-      search: localStorage.getItem('search'),
-      product: localStorage.getItem('product'),
-      export: localStorage.getItem('export')
+      search: search,
+      product: product.split(','),
+      export: (parseInt(localStorage.getItem('export')) === 1) ? true : false,
     })
   }
 
@@ -40,7 +52,7 @@ class App extends Component {
   }
 
   onChangeExport = (event) => {
-    let exportValue = event.target.checked;
+    let exportValue = (event.target.checked) ? 1 : 0;
     this.setState({ export: exportValue });
     localStorage.setItem('export', exportValue);
   }
